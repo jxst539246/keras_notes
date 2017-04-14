@@ -1,6 +1,7 @@
 from keras.layers import Input,Dense
 from keras.models import Model,Sequential
 from keras.datasets import mnist
+from keras.callbacks import TensorBoard
 from keras import  regularizers
 import numpy as np
 encoding_size = 32
@@ -38,7 +39,8 @@ x_test = x_test.astype('float32')/255.
 x_train = x_train.reshape((len(x_train),784))
 x_test = x_test.reshape((len(x_test),784))
 
-autoencoder.fit(x_train,x_train,batch_size=64,nb_epoch=20,validation_data=(x_test,x_test))
+autoencoder.fit(x_train,x_train,batch_size=64,nb_epoch=20,validation_data=(x_test,x_test),
+                callbacks=[TensorBoard(log_dir="tmp/deepautoencoder")])
 encoded_img = encoder.predict(x_test)
 decoded_img = final_decoder.predict(encoded_img)
 
